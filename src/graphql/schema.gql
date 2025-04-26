@@ -2,6 +2,12 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type AuthPayload {
+  accessToken: String!
+  refreshToken: String!
+  user: User!
+}
+
 input CreateUserInput {
   email: String!
   name: String!
@@ -16,7 +22,7 @@ scalar DateTime
 
 type Mutation {
   deleteUser(id: String!): User!
-  register(input: CreateUserInput!): User!
+  register(input: CreateUserInput!): AuthPayload!
   updateUser(id: String!, input: UpdateUserInput!): User!
 }
 
@@ -26,11 +32,6 @@ type Query {
   findUserById(id: String!): User!
   findUserByUsername(username: String!): User!
   hello: String!
-}
-
-enum Role {
-  ADMIN
-  USER
 }
 
 input UpdateUserInput {
@@ -45,7 +46,7 @@ type User {
   email: String!
   id: ID!
   name: String!
-  role: Role!
+  role: String!
   updatedAt: DateTime!
   username: String!
 }
