@@ -2,12 +2,14 @@ import { ConflictException, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { CreateUserInput } from 'src/user/dtos/create-user.input';
 import { UserService } from 'src/user/user.service';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly userService: UserService,
     private readonly jwtService: JwtService,
+    private readonly configService: ConfigService,
   ) {}
 
   async register(input: CreateUserInput) {
@@ -25,12 +27,18 @@ export class AuthService {
 
     const accessToken = this.jwtService.sign(
       { sub: user.id },
-      { expiresIn: '15m' },
+      {
+        secret: this.configService.get('JWT_ACCESS_SECRET'),
+        expiresIn: this.configService.get('JWT_ACCESS_EXPIRES_IN'),
+      },
     );
 
     const refreshToken = this.jwtService.sign(
       { sub: user.id },
-      { expiresIn: '7d' },
+      {
+        secret: this.configService.get('JWT_REFRESH_SECRET'),
+        expiresIn: this.configService.get('JWT_REFRESH_EXPIRES_IN'),
+      },
     );
 
     return {

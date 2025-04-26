@@ -7,6 +7,7 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriverConfig, ApolloDriver } from '@nestjs/apollo';
 import { PrismaModule } from './prisma/prisma.module';
 import { AppResolver } from './app.resolver';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { AppResolver } from './app.resolver';
       sortSchema: true,
       context: ({ req }) => ({ req }), // for auth guards !
     }),
+    ConfigModule.forRoot({ isGlobal: true }),
     AuthModule,
     UserModule,
     CommonModule,
