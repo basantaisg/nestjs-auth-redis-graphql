@@ -29,6 +29,9 @@ export class AuthService {
       throw new ConflictException('Username already exists!');
 
     const user = await this.userService.createUser(input);
+    if (!user || !user.id) {
+      throw new InternalServerErrorException('User creation failed');
+    }
 
     const secret = this.configService.get('JWT_ACCESS_SECRET');
     if (!secret)
@@ -55,6 +58,8 @@ export class AuthService {
     if (!accessToken || !refreshToken) {
       throw new InternalServerErrorException('Token generation failed');
     }
+
+    console.log('REGISTERED USER:', user);
 
     return {
       user,

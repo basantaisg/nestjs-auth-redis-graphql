@@ -4,7 +4,7 @@
 
 type AuthPayload {
   accessToken: String
-  refreshToken: String!
+  refreshToken: String
   user: User!
 }
 
@@ -44,7 +44,7 @@ input UpdateUserInput {
 type User {
   createdAt: DateTime!
   email: String!
-  id: ID!
+  id: String!
   name: String!
   role: String!
   updatedAt: DateTime!

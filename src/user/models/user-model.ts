@@ -11,24 +11,11 @@ registerEnumType(Role, {
 
 @ObjectType()
 export class User {
-  @Field(() => ID)
-  id: string;
-
-  @Field()
-  name: string;
-
-  @Field()
-  email: string;
-
-  @Field()
-  username: string;
-
-  @Field(() => String)
-  role: PrismaRole;
-
-  @Field()
-  createdAt: Date;
-
-  @Field()
-  updatedAt: Date;
+  @Field() id: string;
+  @Field() email: string;
+  @Field() username: string;
+  @Field() name: string;
+  @Field() role: PrismaRole;
+  @Field() createdAt: Date;
+  @Field() updatedAt: Date;
 }

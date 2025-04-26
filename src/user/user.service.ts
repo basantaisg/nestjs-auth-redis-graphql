@@ -17,6 +17,15 @@ export class UserService {
         name: data.name,
         password: hashedPassword,
       },
+      select: {
+        id: true,
+        email: true,
+        username: true,
+        name: true,
+        role: true,
+        createdAt: true,
+        updatedAt: true,
+      },
     });
   }
 
