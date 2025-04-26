@@ -1,4 +1,8 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { CreateUserInput } from 'src/user/dtos/create-user.input';
 import { UserService } from 'src/user/user.service';
@@ -26,6 +30,12 @@ export class AuthService {
 
     const user = await this.userService.createUser(input);
 
+    const secret = this.configService.get('JWT_ACCESS_SECRET');
+    if (!secret)
+      throw new Error(
+        'JWT_ACCESS_SECRET is not defined in the environment variables.',
+      );
+
     const accessToken = await this.jwtService.signAsync(
       { sub: user.id },
       {
@@ -41,6 +51,10 @@ export class AuthService {
         expiresIn: this.configService.get('JWT_REFRESH_EXPIRES_IN'),
       },
     );
+
+    if (!accessToken || !refreshToken) {
+      throw new InternalServerErrorException('Token generation failed');
+    }
 
     return {
       user,
