@@ -16,17 +16,28 @@ scalar DateTime
 
 type Mutation {
   register(input: CreateUserInput!): User!
+  updateUser(input: UpdateUserInput!, userId: ID!): User!
 }
 
 type Query {
   findAllUsers: [User!]!
+  findUserByEmail(email: String!): User!
   findUserById(id: String!): User!
+  findUserByUsername(username: String!): User!
   hello: String!
 }
 
 enum Role {
   ADMIN
   USER
+}
+
+input UpdateUserInput {
+  email: String
+  id: ID!
+  name: String
+  password: String
+  username: String
 }
 
 type User {

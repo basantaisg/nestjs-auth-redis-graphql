@@ -20,7 +20,7 @@ export class UserResolver {
   }
 
   @Query(() => User)
-  findUserByEmail(@Args('email', { type: () => IsEmail }) email: string) {
+  findUserByEmail(@Args('email') email: string) {
     return this.userService.findUserByEmail(email);
   }
 
