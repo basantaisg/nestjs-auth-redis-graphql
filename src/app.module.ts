@@ -6,11 +6,12 @@ import { RedisModule } from './redis/redis.module';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriverConfig, ApolloDriver } from '@nestjs/apollo';
 import { PrismaModule } from './prisma/prisma.module';
+import { AppResolver } from './app.resolver';
 
 @Module({
   imports: [
     GraphQLModule.forRoot<ApolloDriverConfig>({
-      autoSchemaFile: './graphql/schema.gql',
+      autoSchemaFile: 'src/graphql/schema.gql',
       driver: ApolloDriver,
       sortSchema: true,
       context: ({ req }) => ({ req }), // for auth guards !
@@ -20,6 +21,7 @@ import { PrismaModule } from './prisma/prisma.module';
     CommonModule,
     RedisModule,
     PrismaModule,
+    AppResolver,
   ],
 })
 export class AppModule {}
