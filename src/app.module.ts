@@ -5,6 +5,7 @@ import { CommonModule } from './common/common.module';
 import { RedisModule } from './redis/redis.module';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriverConfig, ApolloDriver } from '@nestjs/apollo';
+import { PrismaModule } from './prisma/prisma.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { ApolloDriverConfig, ApolloDriver } from '@nestjs/apollo';
     UserModule,
     CommonModule,
     RedisModule,
+    PrismaModule,
   ],
 })
 export class AppModule {}
