@@ -19,6 +19,8 @@ type Mutation {
 }
 
 type Query {
+  findAllUsers: [User!]!
+  findUserById(id: String!): User!
   hello: String!
 }
 
