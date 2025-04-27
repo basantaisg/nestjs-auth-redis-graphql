@@ -9,7 +9,6 @@ export class AuthResolver {
 
   @Mutation(() => AuthPayload)
   async register(@Args('input') input: CreateUserInput) {
-    const result = await this.authService.register(input);
-    return result.user;
+    return await this.authService.register(input);
   }
 }

@@ -5,7 +5,7 @@
 type AuthPayload {
   accessToken: String
   refreshToken: String
-  user: User!
+  user: User
 }
 
 input CreateUserInput {

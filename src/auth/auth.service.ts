@@ -60,11 +60,12 @@ export class AuthService {
     }
 
     console.log('REGISTERED USER:', user);
+    console.log('About to return:', { user, accessToken, refreshToken });
 
     return {
-      user,
-      accessToken,
-      refreshToken,
+      user: user,
+      accessToken: accessToken,
+      refreshToken: refreshToken,
     };
   }
 }
