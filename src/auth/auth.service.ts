@@ -8,6 +8,8 @@ import { CreateUserInput } from 'src/user/dtos/create-user.input';
 import { UserService } from 'src/user/user.service';
 import { ConfigService } from '@nestjs/config';
 import { AuthPayload } from './models/auth-payload.model';
+import { InjectRedis } from '@nestjs-modules/ioredis';
+import Redis from 'ioredis';
 
 @Injectable()
 export class AuthService {
@@ -15,6 +17,7 @@ export class AuthService {
     private readonly userService: UserService,
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
+    @InjectRedis() private readonly redis: Redis,
   ) {}
 
   async register(input: CreateUserInput): Promise<AuthPayload> {
@@ -54,6 +57,9 @@ export class AuthService {
         expiresIn: this.configService.get('JWT_REFRESH_EXPIRES_IN'),
       },
     );
+
+    const refreshKey = `refresh:${user.id}`;
+    await this.redis.set(refreshKey, refreshToken, 'EX', 7 * 24 * 60 * 60); // 7 days!
 
     if (!accessToken || !refreshToken) {
       throw new InternalServerErrorException('Token generation failed');
